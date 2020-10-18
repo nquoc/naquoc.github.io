@@ -16,10 +16,10 @@ function firstQuestion(){
     Swal.fire({
         title: 'He luu EM!',
         text: 'Anh có điều này muốn hỏi em nhớ phải trả lời thật lòng nhaaa.',
-        imageUrl: './img/cuteCat.jpg',
+        imageUrl: 'img/cuteCat.jpg',
         imageWidth: 300,
         imageHeight: 300,
-        background: '#fff url("./img/iput-bg.jpg")',
+        background: '#fff url("img/iput-bg.jpg")',
         imageAlt: 'Custom image',
       }).then(function(){
         $('.content').show(200);
