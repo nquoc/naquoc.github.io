@@ -1,51 +1,315 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>My Baby</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/spinload.css">
-    <link rel="stylesheet" type="text/css" href=" https://fonts.googleapis.com/css?family=Pacifico" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+	<meta property="og:title" content="Hệ thống tính điểm KPI siêu cấp vũ trụ." itemprop="name">
+    <title>My KPI Current Month</title>
+    <style type="text/css">
+    	#warning{
+    		display: none;
+    	}
+    </style>
   </head>
   <body>
-    <div class="wrapper">
-      <!-- Preloader -->
-    <div id="preloader">
-      <div class="spinner">
-        <div class="rect1"></div>
-        <div class="rect2"></div>
-        <div class="rect3"></div>
-        <div class="rect4"></div>
-        <div class="rect5"></div>
-      </div>
-  </div>
-      <div id="bg"></div>
-      <div class="content">
-        <header>
-          <h2> EM lựa cọn đồng ý làm người yêu anh ko nhe :) :>> </h2>
-          <h4>Thoát ra coi như là đồng ý rồi nha :v </h4>
-        </header>
-        <button id="yes" type="button" class="btn btn-danger btn-lg">Oki nè EM đồng ý <333 </button>
-        <button id="" type="button" class="btn btn-danger btn-lg"><a> href="https://vst.mof.gov.vn/webcenter/contentattachfile/idcplg?dID=167733&dDocName=MOFUCM160794&filename=KBNN_CTS_CongCong.rar"</a>Tải Dịch Vụ Công</button>
-        <button id="no" type="button" class="btn btn-info btn-lg">No. Anh mơ à :333 </button>
-      </div>
-    </div>
-    <audio src="./sound/sound.mp3" autoplay></audio>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script src="js/myJs.js"></script>
+   		<div class="container">
+   			<br>
+   		<h3 class="success" align="center" style="color: red;"><b>Tính KPI Trong Tháng</b></h3>
 
+    	
+		<div class="alert alert-danger alert-dismissible fade show mb-0" role="alert" id="warning">
+			<i class="fas fa-check-circle"></i> Mày Không Nhập Số Sao Tao Biết Đường Tính!!
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+
+
+
+		<label for="basic-url"><b>Chọn Lever!</b></label>
+		<select class="custom-select" id="mylever">
+	
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+		  </select>
+   			
+		  <label for="basic-url"><b>Nhập Tổng Điểm KPI Hiện Tại Trong Tháng!</b></label>
+		  <input type="number" class="form-control" id="mypoint" aria-describedby="basic-addon3" placeholder="Enter My KPI By Point Current Month">
+		  <label for="basic-url"><b>Nhập Số Lượng Công Việc Hiện Tại trong Tháng</b></label>
+		  <input type="number" class="form-control" id="myquantity" aria-describedby="basic-addon3" placeholder="Enter My KPI By Quantity Current Month  ">
+		  	<br>
+		  	<div>
+			  <button class="btn btn-success" id="btnexcute" onclick="excuteform()">ExCute Form!</button>
+			  <button class="btn btn-danger" id="btndelete" onclick="deleteform()">Delete Form!</button>
+		  </div>
+		  <br>
+		  <h5 class="font-weight-bold"><span id="diemkpi" style="color: red;"></span> <span id="mydiemkpi"></span></h5>
+		  <h5 class="font-weight-bold"><span id="soluongkpi" style="color: red";></span> <span id="mysoluongkpi"></span></h5>
+		   
+		   <h3 id="pass" class="text-success font-weight-bold bg-light"></h3>
+		   <h3 id="average" class="text-warning font-weight-bold bg-success"></h3>
+		   <h3 id="fail" class="text-danger font-weight-bold bg-light"></h3>
+		   <h3 id="vuot120" class="text-danger font-weight-bold bg-dark"></h3>
+
+		  <script type="text/javascript">
+			  var warning = document.getElementById("warning");
+		  	  var mylever = document.getElementById("mylever");
+			  var mypoint = document.getElementById("mypoint");	
+			  var myquantity = document.getElementById("myquantity");
+
+			  var pass = document.getElementById("pass");
+			  var fail = document.getElementById("fail");
+			  var average = document.getElementById("average");
+			  var vuot120 = document.getElementById("vuot120");
+
+
+			  var diemkpi = document.getElementById("diemkpi");
+			  var mydiemkpi = document.getElementById("mydiemkpi");
+			  var soluongkpi = document.getElementById("soluongkpi");
+			  var mysoluongkpi = document.getElementById("mysoluongkpi");			
+
+
+			  function deleteform(){
+				mypoint.value= "";
+				myquantity.value= "";
+				pass.innerHTML= "";
+				fail.innerHTML= "";
+				average.innerHTML= "";
+				vuot120.innerHTML= "";
+				diemkpi.innerHTML= "";
+				mydiemkpi.innerHTML= "";
+				soluongkpi.innerHTML= "";
+				mysoluongkpi.innerHTML= "";
+			  }
+			  
+			  function excuteform(){
+				if(mylever.value==""|| mypoint.value==""|| myquantity.value==""){
+					warning.style.display = "block";
+				}else{
+					warning.style.display = "none";
+					if(mylever.value=="1"){
+						var Point = 3000;
+						var Quantity = 700;
+						var Result = (mypoint.value/Point)*60+(myquantity.value/Quantity)*40;
+
+						
+
+						diemkpi.innerHTML= "Điểm Kpi Lever" +mylever.value+":" +Point;
+						mydiemkpi.innerHTML="/Điểm Hiện Tại: " +mypoint.value + "</br>";
+						soluongkpi.innerHTML= "SLCV Lever" +mylever.value+":" +Quantity;
+						mysoluongkpi.innerHTML="/SLCV Hiện Tại: " +myquantity.value;
+
+						if(Result<100){
+							fail.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Rán chạy cho đủ KPI kẻo bị đuổi nha Mậy.";
+							pass.innerHTML= "";
+							
+							average.innerHTML= "";
+							vuot120.innerHTML= "";
+						}
+						if(Result==100){
+							average.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Mài nhập điêu đúng không làm éo gì đúng 100% được.";
+							pass.innerHTML= "";
+							fail.innerHTML= "";
+							
+							vuot120.innerHTML= "";
+						}
+						if(Result>100 && Result<120){
+							pass.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Mài chạy vượt hơn 100% rồi Rán lên 120% đi.";
+							
+							fail.innerHTML= "";
+							average.innerHTML= "";
+							vuot120.innerHTML= "";
+						}
+						if(Result>=120){
+							vuot120.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Mài chạy vượt hơn 120% KPI rồi. Nghĩ làm đi về nhà ngủ đi";
+							pass.innerHTML= "";
+							fail.innerHTML= "";
+							average.innerHTML= "";
+							
+						}
+
+						
+					
+					}
+					if(mylever.value=="2"){
+						var Point = 3700;
+						var Quantity = 900;
+						var Result = (mypoint.value/Point)*60+(myquantity.value/Quantity)*40;
+
+						diemkpi.innerHTML= "Điểm Kpi Lever" +mylever.value+":" +Point;
+						mydiemkpi.innerHTML="/Điểm Hiện Tại: " +mypoint.value + "</br>";
+						soluongkpi.innerHTML= "SLCV Lever" +mylever.value+":" +Quantity;
+						mysoluongkpi.innerHTML="/SLCV Hiện Tại: " +myquantity.value;
+
+						if(Result<100){
+							fail.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Rán chạy cho đủ KPI kẻo bị đuổi nha Mậy.";
+							pass.innerHTML= "";
+							
+							average.innerHTML= "";
+							vuot120.innerHTML= "";
+						}
+						if(Result==100){
+							average.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Mài nhập điêu đúng không làm éo gì đúng 100% được.";
+							pass.innerHTML= "";
+							fail.innerHTML= "";
+							
+							vuot120.innerHTML= "";
+						}
+						if(Result>100 && Result<120){
+							pass.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Mài chạy vượt hơn 100% rồi Rán lên 120% đi.";
+							
+							fail.innerHTML= "";
+							average.innerHTML= "";
+							vuot120.innerHTML= "";
+						}
+						if(Result>=120){
+							vuot120.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Mài chạy vượt hơn 120% KPI rồi. Nghĩ làm đi về nhà ngủ đi";
+							pass.innerHTML= "";
+							fail.innerHTML= "";
+							average.innerHTML= "";
+							
+						} 
+					}
+					if(mylever.value=="3"){
+						var Point = 4400;
+						var Quantity = 1050;
+						var Result = (mypoint.value/Point)*60+(myquantity.value/Quantity)*40;
+
+						diemkpi.innerHTML= "Điểm Kpi Lever" +mylever.value+":" +Point;
+						mydiemkpi.innerHTML="/Điểm Hiện Tại: " +mypoint.value + "</br>";
+						soluongkpi.innerHTML= "SLCV Lever" +mylever.value+":" +Quantity;
+						mysoluongkpi.innerHTML="/SLCV Hiện Tại: " +myquantity.value;
+
+						if(Result<100){
+							fail.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Rán chạy cho đủ KPI kẻo bị đuổi nha Mậy.";
+							pass.innerHTML= "";
+							
+							average.innerHTML= "";
+							vuot120.innerHTML= "";
+						}
+						if(Result==100){
+							average.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Mài nhập điêu đúng không làm éo gì đúng 100% được.";
+							pass.innerHTML= "";
+							fail.innerHTML= "";
+							
+							vuot120.innerHTML= "";
+						}
+						if(Result>100 && Result<120){
+							pass.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Mài chạy vượt hơn 100% rồi Rán lên 120% đi.";
+							
+							fail.innerHTML= "";
+							average.innerHTML= "";
+							vuot120.innerHTML= "";
+						}
+						if(Result>=120){
+							vuot120.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Mài chạy vượt hơn 120% KPI rồi. Nghĩ làm đi về nhà ngủ đi";
+							pass.innerHTML= "";
+							fail.innerHTML= "";
+							average.innerHTML= "";
+							
+						}
+					}
+					if(mylever.value=="4"){
+						var Point = 5170;
+						var Quantity = 1250;
+						var Result = (mypoint.value/Point)*60+(myquantity.value/Quantity)*40;
+
+						diemkpi.innerHTML= "Điểm Kpi Lever" +mylever.value+":" +Point;
+						mydiemkpi.innerHTML="/Điểm Hiện Tại: " +mypoint.value + "</br>";
+						soluongkpi.innerHTML= "SLCV Lever" +mylever.value+":" +Quantity;
+						mysoluongkpi.innerHTML="/SLCV Hiện Tại: " +myquantity.value;
+
+						if(Result<100){
+							fail.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Rán chạy cho đủ KPI kẻo bị đuổi nha Mậy.";
+							pass.innerHTML= "";
+							
+							average.innerHTML= "";
+							vuot120.innerHTML= "";
+						}
+						if(Result==100){
+							average.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Mài nhập điêu đúng không làm éo gì đúng 100% được.";
+							pass.innerHTML= "";
+							fail.innerHTML= "";
+							
+							vuot120.innerHTML= "";
+						}
+						if(Result>100 && Result<120){
+							pass.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Mài chạy vượt hơn 100% rồi Rán lên 120% đi.";
+							
+							fail.innerHTML= "";
+							average.innerHTML= "";
+							vuot120.innerHTML= "";
+						}
+						if(Result>=120){
+							vuot120.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Mài chạy vượt hơn 120% KPI rồi. Nghĩ làm đi về nhà ngủ đi";
+							pass.innerHTML= "";
+							fail.innerHTML= "";
+							average.innerHTML= "";
+							
+						}
+					}
+					if(mylever.value=="5"){
+						var Point = 6300;
+						var Quantity = 1500;
+						var Result = (mypoint.value/Point)*60+(myquantity.value/Quantity)*40;
+
+						diemkpi.innerHTML= "Điểm Kpi Lever" +mylever.value+":" +Point;
+						mydiemkpi.innerHTML="/Điểm Hiện Tại: " +mypoint.value + "</br>";
+						soluongkpi.innerHTML= "SLCV Lever" +mylever.value+":" +Quantity;
+						mysoluongkpi.innerHTML="/SLCV Hiện Tại: " +myquantity.value;
+
+						if(Result<100){
+							fail.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Rán chạy cho đủ KPI kẻo bị đuổi nha Mậy.";
+							pass.innerHTML= "";
+							
+							average.innerHTML= "";
+							vuot120.innerHTML= "";
+						}
+						if(Result==100){
+							average.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Mài nhập điêu đúng không làm éo gì đúng 100% được.";
+							pass.innerHTML= "";
+							fail.innerHTML= "";
+							
+							vuot120.innerHTML= "";
+						}
+						if(Result>100 && Result<120){
+							pass.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Mài chạy vượt hơn 100% rồi Rán lên 120% đi.";
+							
+							fail.innerHTML= "";
+							average.innerHTML= "";
+							vuot120.innerHTML= "";
+						}
+						if(Result>=120){
+							vuot120.innerHTML = "Điểm KPI hiện tại là: "+ Result.toFixed(2) + "%, Mài chạy vượt hơn 120% KPI rồi. Nghĩ làm đi về nhà ngủ đi";
+							pass.innerHTML= "";
+							fail.innerHTML= "";
+							average.innerHTML= "";
+							
+						}
+					}
+				}
+			  }
+
+		
+		  </script>
+
+   		</div>
+  
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+    -->
   </body>
 </html>
